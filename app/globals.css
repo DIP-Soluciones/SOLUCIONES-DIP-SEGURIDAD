@@ -1,26 +1,128 @@
-@import "tailwindcss";
+/* 
+ * ESCALA DE CAPAS (Z-INDEX):
+ * - z-0 a z-30: Contenido de secciones (tarjetas, imágenes, superposiciones).
+ * - z-[100]: Header (barra flotante y menú móvil).
+ * 
+ * REGLA: El contenido de las secciones nunca debe superar z-30 para garantizar
+ * que la barra de navegación (z-[100]) siempre quede por encima de todo.
+ */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import 'tailwindcss';
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  /* --- COLORES --- */
+  --color-background: #0A0A0B;
+  --color-surface: #111113;
+  --color-surface-raised: #151518;
+  --color-line: rgba(255, 255, 255, 0.12);
+  --color-foreground: #FFFFFF;
+  /* #A1A1AA sobre #111113 ofrece contraste ~7.2:1 (supera WCAG AA 4.5:1) */
+  --color-muted-text: #A1A1AA;
+  --color-brand: #D92323;
+  --color-brand-dark: #B01C1C;
+  --color-pill: #FFFFFF;
+  --color-pill-text: #0F172A;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* --- TIPOGRAFÍA --- */
+  --font-sans: var(--font-inter);
+  /* Escala tipográfica unificada para encabezados de sección */
+  --text-eyebrow: 0.75rem;      /* 12px */
+  --text-h2: clamp(1.875rem, 3.2vw + 1rem, 3rem); /* 30px -> 48px */
+  --text-intro: clamp(1rem, 0.5vw + 0.875rem, 1.125rem); /* 16px -> 18px */
+
+  /* --- RADIOS (Un único set para todo el sitio) --- */
+  --radius-card: 2.5rem;        /* Tarjetas principales y contenedores de sección (reemplaza rounded-[2.5rem]) */
+  --radius-panel: 1rem;         /* Sub-paneles, cajas de features y tarjetas internas (reemplaza rounded-2xl / rounded-3xl) */
+  --radius-pill: 9999px;        /* Botones, chips y badges (reemplaza rounded-full) */
+
+  /* --- SOMBRAS --- */
+  --shadow-card: 0 -24px 60px -12px rgb(0 0 0 / 0.65), 0 40px 80px -30px rgb(0 0 0 / 0.8);
+  --shadow-glow-brand: 0 0 32px -4px rgb(217 35 35 / 0.35);
+
+  /* --- ESPACIADO VERTICAL DE SECCIÓN --- */
+  --spacing-section-y-mobile: 4rem;   /* 64px (py-section-y-mobile) */
+  --spacing-section-y-desktop: 6.5rem; /* 104px (md:py-section-y-desktop) */
+
+  /* --- ANIMACIONES --- */
+  --animate-marquee: marquee 35s linear infinite;
+  --animate-path-flow: path-flow 24s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes path-flow {
+    to { 
+      stroke-dashoffset: -1; 
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Máscara de desvanecido en los bordes para el marquee */
+  .mask-fade-edges {
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+  
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  /* Anillo de foco accesible global usando el token brand */
+  :focus-visible {
+    outline: none;
+    @apply ring-2 ring-brand ring-offset-2 ring-offset-background;
+  }
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scroll-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: scroll-left 35s linear infinite;
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: scroll-right 35s linear infinite;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
+  }
 }
