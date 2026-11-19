@@ -230,7 +230,7 @@ export interface ContactContent {
 }
 
 export interface SocialLink {
-  id: "instagram" | "facebook" | "tiktok" | "youtube" | "linkedin";
+  id: "whatsapp" | "instagram" | "facebook" | "tiktok" | "youtube" | "linkedin";
   label: string;
   href: string;
 }
@@ -315,12 +315,22 @@ export const siteContent: SiteContent = {
 
   services: SERVICES,
 
-  // TODO: completar URLs reales
   socials: [
-    { id: "instagram", label: "Instagram", href: "" },
-    { id: "facebook", label: "Facebook", href: "" },
-    { id: "tiktok", label: "TikTok", href: "" },
-    { id: "youtube", label: "YouTube", href: "" },
+    {
+      id: "whatsapp",
+      label: "WhatsApp",
+      href: "https://wa.me/56966660120",
+    },
+    {
+      id: "instagram",
+      label: "Instagram",
+      href: "https://www.instagram.com/",
+    },
+    {
+      id: "facebook",
+      label: "Facebook",
+      href: "https://www.facebook.com/",
+    },
   ],
 
   sections: {

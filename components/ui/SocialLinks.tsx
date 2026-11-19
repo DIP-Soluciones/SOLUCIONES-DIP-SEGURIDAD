@@ -1,5 +1,6 @@
 import type { IconType } from "react-icons";
 import {
+  FaWhatsapp,
   FaInstagram,
   FaFacebookF,
   FaTiktok,
@@ -9,6 +10,7 @@ import {
 import { siteContent, type SocialLink } from "@/content/site";
 
 export const socialIcons: Record<SocialLink["id"], IconType> = {
+  whatsapp: FaWhatsapp,
   instagram: FaInstagram,
   facebook: FaFacebookF,
   tiktok: FaTiktok,

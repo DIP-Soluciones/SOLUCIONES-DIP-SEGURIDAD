@@ -5,6 +5,7 @@ import HeaderNav from "@/components/layout/HeaderNav";
 import Footer from "@/components/layout/Footer";
 import { siteContent } from "@/content/site";
 import { FloatingOrbCta } from "@/components/layout/FloatingOrbCta";
+import { FloatingSocials } from "@/components/layout/FloatingSocials";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -43,6 +44,9 @@ export default function RootLayout({
         {children}
         <Footer />
         
+        {/* Barra lateral flotante fija a la izquierda y centrada verticalmente */}
+        <FloatingSocials />
+
         {/* Renderiza el botón global del Orbe Flotante */}
         <FloatingOrbCta />
       </body>
