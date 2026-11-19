@@ -2,7 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import BrandLogo from '@/components/layout/BrandLogo';
-import { GlobeIcon, MenuIcon, CloseIcon } from '@/components/ui/icons';
+import { MenuIcon, CloseIcon } from '@/components/ui/icons';
+import { FaWhatsapp } from "react-icons/fa6";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
 import { RandomLetterSwap } from '@/components/ui/random-letter-swap';
 import { siteContent } from '@/content/site';
 import { Button } from '@/components/ui/Button';
@@ -11,6 +13,11 @@ import { cn } from '@/lib/utils';
 export default function HeaderNav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const whatsappHref = getWhatsAppUrl(
+    siteContent.sections.contact.whatsapp.number,
+    "Hola, me gustaría solicitar más información o un diagnóstico de seguridad."
+  );
 
   useEffect(() => {
     let isCurrentlyScrolled = window.scrollY > 16;
@@ -91,15 +98,18 @@ export default function HeaderNav() {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center gap-4">
-            <button 
-              aria-label={siteContent.nav.languageLabel} 
-              className="text-pill-text hover:text-pill-text/70 transition-colors p-2"
+          <div className="flex items-center gap-4">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Solicitar diagnóstico por WhatsApp"
+              className="inline-flex items-center justify-center p-2 text-pill-text hover:text-brand transition-colors"
             >
-              <GlobeIcon className="w-5 h-5" />
-            </button>
+              <FaWhatsapp className="w-5 h-5 text-brand" />
+            </a>
 
-            <Button href={siteContent.nav.ctaHref} variant="primary" size="sm">
+            <Button href={siteContent.nav.ctaHref} variant="primary" size="sm" className="hidden md:flex">
               {siteContent.nav.ctaLabel}
             </Button>
           </div>
@@ -138,15 +148,7 @@ export default function HeaderNav() {
             ))}
           </nav>
           
-          <div className="flex items-center justify-between pt-5 border-t border-line">
-            <button 
-              aria-label={siteContent.nav.languageLabel} 
-              className="flex items-center gap-2 text-pill-text hover:text-pill-text/70 transition-colors font-medium"
-            >
-              <GlobeIcon className="w-5 h-5" />
-              <span>{siteContent.nav.languageLabel}</span>
-            </button>
-            
+          <div className="flex items-center justify-end pt-5 border-t border-line">
             <Button 
               href={siteContent.nav.ctaHref} 
               variant="primary" 

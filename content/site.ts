@@ -139,8 +139,15 @@ export interface FeaturedProductsContent {
   items: readonly FeaturedProduct[];
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 export interface BannerContent {
   title: string;
+  faqTitle: string;
+  faqs: readonly FaqItem[];
 }
 
 export interface ProcessStep {
@@ -641,6 +648,26 @@ export const siteContent: SiteContent = {
     },
     banner: {
       title: "La tecnología más avanzada es la que te deja vivir tranquilo.",
+      faqTitle: "Preguntas frecuentes",
+      // CONFIRMAR con el cliente
+      faqs: [
+        {
+          question: "¿Qué servicios ofrecen?",
+          answer: "Cámaras de seguridad, portones eléctricos, chapas de seguridad, alarmas y balizas, para hogares y negocios.",
+        },
+        {
+          question: "¿Cómo funciona el diagnóstico?",
+          answer: "Analizamos los riesgos y puntos críticos de tu espacio, diseñamos una solución a tu medida y recién después cotizamos.",
+        },
+        {
+          question: "¿Dan soporte después de la instalación?",
+          answer: "Sí, hay soporte y seguimiento después de la entrega.",
+        },
+        {
+          question: "¿Cómo pido una cotización?",
+          answer: "Completa el formulario de contacto o escríbenos por WhatsApp y te respondemos con una propuesta.",
+        },
+      ],
     },
     process: {
       eyebrow: "Nuestro método",

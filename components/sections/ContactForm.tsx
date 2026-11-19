@@ -5,7 +5,7 @@ import { siteContent } from '@/content/site';
 import { Button } from '@/components/ui/Button';
 import { getWhatsAppUrl } from '@/lib/whatsapp';
 
-type FormStatus = 'idle' | 'loading' | 'success' | 'error';
+type FormStatus = 'idle' | 'loading' | 'success' | 'error' | 'whatsapp-error';
 type FieldErrors = Record<string, string>;
 
 const fieldBaseClassName =
@@ -23,6 +23,9 @@ export function ContactForm() {
 
   const [status, setStatus] = useState<FormStatus>('idle');
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+
+  const whatsappErrorMessage =
+    "No se pudo abrir WhatsApp. Por favor envía el mensaje desde tu teléfono.";
 
   const clearFieldError = (name: string) => {
     if (!fieldErrors[name]) return;
@@ -57,7 +60,7 @@ export function ContactForm() {
     const whatsappUrl = getWhatsAppUrl(whatsappNumber, whatsappMessage);
 
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('/api', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -69,7 +72,10 @@ export function ContactForm() {
         form.reset();
 
         // Abre WhatsApp con el mensaje estructurado de inmediato
-        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        const opened = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        if (!opened) {
+          setStatus('whatsapp-error');
+        }
         return;
       }
 
@@ -178,6 +184,9 @@ export function ContactForm() {
       <div aria-live="polite" className="min-h-[24px] text-center text-sm font-medium">
         {status === 'success' && <p className="text-foreground">{successMessage}</p>}
         {status === 'error' && <p className="text-foreground font-bold">{errorMessage}</p>}
+        {status === 'whatsapp-error' && (
+          <p className="text-foreground font-bold">{whatsappErrorMessage}</p>
+        )}
       </div>
 
       <div className="pt-2">
