@@ -5,7 +5,6 @@ import HeaderNav from "@/components/layout/HeaderNav";
 import Footer from "@/components/layout/Footer";
 import { siteContent } from "@/content/site";
 import { FloatingOrbCta } from "@/components/layout/FloatingOrbCta";
-import { FloatingSocials } from "@/components/layout/FloatingSocials";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -22,7 +21,7 @@ export default function RootLayout({
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dipseguridad.cl";
   const activeSocialUrls = siteContent.socials
     .map((s) => s.href)
-    .filter((href) => Boolean(href && href.trim().length > 0));
+    .filter((href) => Boolean(href && href.trim().startsWith("http")));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -43,9 +42,6 @@ export default function RootLayout({
         <HeaderNav />
         {children}
         <Footer />
-        
-        {/* Barra lateral flotante fija a la izquierda y centrada verticalmente */}
-        <FloatingSocials />
 
         {/* Renderiza el botón global del Orbe Flotante */}
         <FloatingOrbCta />

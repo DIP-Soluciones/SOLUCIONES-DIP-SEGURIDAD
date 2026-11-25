@@ -46,6 +46,21 @@ export interface BrandsContent {
   items: readonly BrandItem[];
 }
 
+export interface ClientItem {
+  id: string;
+  name: string;
+  sector?: string;
+  logo: string;
+  alt: string;
+}
+
+export interface ClientsContent {
+  eyebrow: string;
+  titleParts: readonly TitlePart[];
+  intro: string;
+  items: readonly ClientItem[];
+}
+
 export interface ServiceCategory {
   id: string;
   label: string;
@@ -137,6 +152,27 @@ export interface FeaturedProductsContent {
   cardAriaLabel: string;
   whatsappMessage: string;
   items: readonly FeaturedProduct[];
+}
+
+export interface WorkProject {
+  id: string;
+  title: string;
+  category: string;
+  location?: string;
+  image: string;
+  alt: string;
+}
+
+export interface ProjectsContent {
+  eyebrow: string;
+  titleParts: readonly TitlePart[];
+  intro: string;
+  viewMoreLabel: string;
+  modalTitle: string;
+  modalSubtitle: string;
+  allFilterLabel: string;
+  closeLabel: string;
+  items: readonly WorkProject[];
 }
 
 export interface FaqItem {
@@ -253,6 +289,7 @@ export interface FooterContent {
 
 export interface FeaturesFlags {
   stats: boolean;
+  clients: boolean;
   testimonials: boolean;
   featuredProducts: boolean;
 }
@@ -275,9 +312,11 @@ export interface SiteContent {
     brands: BrandsContent;
     solutions: SolutionsContent;
     featuredProducts: FeaturedProductsContent;
+    projects: ProjectsContent;
     banner: BannerContent;
     process: ProcessContent;
     stats: StatsContent;
+    clients: ClientsContent;
     testimonials: TestimonialsContent;
     contact: ContactContent;
   };
@@ -313,12 +352,13 @@ export const siteContent: SiteContent = {
   },
   features: {
     stats: true,
+    clients: true,
     testimonials: true,
     featuredProducts: true,
   },
   floatingCta: {
     label: "Solicitar diagnóstico",
-    href: "#diagnostico"
+    href: "#diagnostico",
   },
 
   services: SERVICES,
@@ -356,7 +396,7 @@ export const siteContent: SiteContent = {
         "hogar",
         "negocio",
         "familia",
-        "tranquilidad"
+        "tranquilidad",
       ],
       subtitle: "Cámaras, alarmas, portones y control de acceso instalados con criterio. Más control, menos preocupaciones.",
       ctaLabel: "Solicitar diagnóstico",
@@ -376,13 +416,13 @@ export const siteContent: SiteContent = {
         { name: "Marca 7", logo: "/images/brands/marca-7.webp", alt: "Logo Marca 7" },
         { name: "Marca 8", logo: "/images/brands/marca-8.2.webp", alt: "Logo Marca 8" },
         { name: "Marca 9", logo: "/images/brands/marca-9.webp", alt: "Logo Marca 9" },
-      ]
+      ],
     },
     solutions: {
       eyebrow: "Qué hacemos",
       titleParts: [
         { text: "Ver más. " },
-        { text: "Preocuparte menos.", highlight: true }
+        { text: "Preocuparte menos.", highlight: true },
       ],
       intro: "La seguridad no es un dispositivo. Es la suma de cada detalle funcionando en sincronía.",
       itemLabel: "Producto",
@@ -434,7 +474,7 @@ export const siteContent: SiteContent = {
           cta: {
             label: "Cotizar este motor",
             href: "",
-          }
+          },
         },
         {
           layout: "showcase",
@@ -479,7 +519,7 @@ export const siteContent: SiteContent = {
           cta: {
             label: "Cotizar CCTV",
             href: "",
-          }
+          },
         },
         {
           layout: "showcase",
@@ -524,7 +564,7 @@ export const siteContent: SiteContent = {
           cta: {
             label: "Cotizar E.T. Systems",
             href: "",
-          }
+          },
         },
         {
           layout: "showcase",
@@ -569,7 +609,7 @@ export const siteContent: SiteContent = {
           cta: {
             label: "Cotizar WizColor",
             href: "",
-          }
+          },
         },
         {
           layout: "collage",
@@ -587,15 +627,15 @@ export const siteContent: SiteContent = {
           cta: {
             label: "Cotizar Multivisión",
             href: "",
-          }
-        }
+          },
+        },
       ],
     },
     featuredProducts: {
       eyebrow: "Productos destacados",
       titleParts: [
         { text: "Equipos que " },
-        { text: "recomendamos.", highlight: true }
+        { text: "recomendamos.", highlight: true },
       ],
       intro: "Una selección de equipos para proteger tu hogar o negocio.",
       carouselLabel: "Productos destacados",
@@ -612,7 +652,7 @@ export const siteContent: SiteContent = {
           title: "Cámara PTZ",
           description: "Giro y zoom para cubrir más área con una sola cámara.",
           image: "/images/products/ptz.webp",
-          imageAlt: "Cámara domo PTZ Dahua con soporte de pared"
+          imageAlt: "Cámara domo PTZ Dahua con soporte de pared",
         },
         {
           id: "kit-4-camaras",
@@ -621,7 +661,7 @@ export const siteContent: SiteContent = {
           title: "Kit 4 cámaras Full-Color",
           description: "Cuatro cámaras con imagen a color y grabador, con visualización desde el celular.",
           image: "/images/products/kit-4-camaras.webp",
-          imageAlt: "Kit de cuatro cámaras, grabador y celular mostrando las imágenes"
+          imageAlt: "Kit de cuatro cámaras, grabador y celular mostrando las imágenes",
         },
         {
           id: "kit-1080p",
@@ -630,7 +670,7 @@ export const siteContent: SiteContent = {
           title: "Kit cámaras Full HD 1080p",
           description: "Cámaras domo y bullet con fuente de poder, disco duro y accesorios de instalación.",
           image: "/images/products/kit-1080p.webp",
-          imageAlt: "Kit de cámaras domo y bullet con grabador, fuente de poder, disco duro y accesorios"
+          imageAlt: "Kit de cámaras domo y bullet con grabador, fuente de poder, disco duro y accesorios",
         },
         {
           id: "control-et",
@@ -639,7 +679,7 @@ export const siteContent: SiteContent = {
           title: "Control remoto original",
           description: "Control de 2 botones para tu portón.",
           image: "/images/products/control-et.webp",
-          imageAlt: "Control remoto azul E.T. de dos botones"
+          imageAlt: "Control remoto azul E.T. de dos botones",
         },
         {
           id: "kit-motor",
@@ -648,9 +688,80 @@ export const siteContent: SiteContent = {
           title: "Kit motor para portón corredero",
           description: "Motor, 2 controles remotos y cremallera para automatizar tu portón.",
           image: "/images/products/kit-motor.webp",
-          imageAlt: "Motor Rossi con dos controles remotos y una cremallera"
-        }
-      ]
+          imageAlt: "Motor Rossi con dos controles remotos y una cremallera",
+        },
+      ],
+    },
+    projects: {
+      eyebrow: "Nuestro trabajo",
+      titleParts: [
+        { text: "Instalaciones " },
+        { text: "en terreno.", highlight: true },
+      ],
+      intro: "Conoce parte de los proyectos de seguridad y automatización que hemos implementado en hogares y empresas.",
+      viewMoreLabel: "Ver más trabajos",
+      modalTitle: "Galería de proyectos",
+      modalSubtitle: "Explora nuestras instalaciones realizadas por categoría.",
+      allFilterLabel: "Todos",
+      closeLabel: "Cerrar galería",
+      items: [
+        {
+          id: "trabajo-01",
+          title: "Automatización portón corredera residencial",
+          category: "gates",
+          image: "/images/projects/trabajo-01.webp",
+          alt: "Instalación de motor para portón corredera en acceso residencial",
+        },
+        {
+          id: "trabajo-02",
+          title: "Sistema CCTV perimetral Full HD",
+          category: "cctv",
+          image: "/images/projects/trabajo-02.webp",
+          alt: "Cámaras de seguridad instaladas en exterior de empresa",
+        },
+        {
+          id: "trabajo-03",
+          title: "Control de acceso y chapa eléctrica",
+          category: "locks",
+          image: "/images/projects/trabajo-03.webp",
+          alt: "Chapa de seguridad instalada en puerta de acceso principal",
+        },
+        {
+          id: "trabajo-04",
+          title: "Central de alarma y sensores interiores",
+          category: "alarms",
+          image: "/images/projects/trabajo-04.webp",
+          alt: "Panel de alarma instalado y configurado en oficina",
+        },
+        {
+          id: "trabajo-05",
+          title: "Baliza de señalización vehicular",
+          category: "beacons",
+          image: "/images/projects/trabajo-05.webp",
+          alt: "Baliza luminosa instalada en salida de estacionamiento",
+        },
+        {
+          id: "trabajo-06",
+          title: "Motor industrial serie Heavy",
+          category: "gates",
+          image: "/images/projects/trabajo-06.webp",
+          alt: "Motor industrial instalado en portón de alto tráfico",
+        },
+        {
+          id: "trabajo-07",
+          title: "Cámaras visión nocturna a color",
+          category: "cctv",
+          image: "/images/projects/trabajo-07.webp",
+          alt: "Cámara de seguridad a color instalada en fachada",
+        },
+        {
+          id: "trabajo-08",
+          title: "Canalización y rack de videovigilancia",
+          category: "cctv",
+          image: "/images/projects/trabajo-08.webp",
+          alt: "Grabador DVR y cableado estructurado ordenado",
+        },
+      ],
     },
     banner: {
       title: "La tecnología más avanzada es la que te deja vivir tranquilo.",
@@ -679,7 +790,7 @@ export const siteContent: SiteContent = {
       eyebrow: "Nuestro método",
       titleParts: [
         { text: "Precisión " },
-        { text: "por diseño.", highlight: true }
+        { text: "por diseño.", highlight: true },
       ],
       intro: "Cada espacio tiene su propio lenguaje. Lo escuchamos, lo entendemos y construimos una solución que encaje.",
       steps: [
@@ -705,8 +816,75 @@ export const siteContent: SiteContent = {
       eyebrow: "Nuestra trayectoria",
       items: [
         { value: 20, decimals: 0, prefix: "+", suffix: "", label: "años de experiencia" },
-        { value: 1.3, decimals: 1, prefix: "+", suffix: "M", label: "clientes atendidos" }
-      ]
+        { value: 1.3, decimals: 1, prefix: "+", suffix: "M", label: "clientes atendidos" },
+      ],
+    },
+    clients: {
+      eyebrow: "Clientes",
+      titleParts: [
+        { text: "Empresas que " },
+        { text: "confían en DiP.", highlight: true },
+      ],
+      intro: "Instituciones, industrias y comercios que respaldan la calidad de nuestras implementaciones.",
+      // Reemplaza los nombres y guarda los logos en public/images/clients/cliente-01.webp, etc.
+      items: [
+        {
+          id: "cliente-01",
+          name: "Empresa Cliente 1",
+          sector: "Industria",
+          logo: "/images/clients/cliente-01.webp",
+          alt: "Logo Empresa Cliente 1",
+        },
+        {
+          id: "cliente-02",
+          name: "Empresa Cliente 2",
+          sector: "Comercio",
+          logo: "/images/clients/cliente-02.webp",
+          alt: "Logo Empresa Cliente 2",
+        },
+        {
+          id: "cliente-03",
+          name: "Empresa Cliente 3",
+          sector: "Logística",
+          logo: "/images/clients/cliente-03.webp",
+          alt: "Logo Empresa Cliente 3",
+        },
+        {
+          id: "cliente-04",
+          name: "Empresa Cliente 4",
+          sector: "Inmobiliaria",
+          logo: "/images/clients/cliente-04.webp",
+          alt: "Logo Empresa Cliente 4",
+        },
+        {
+          id: "cliente-05",
+          name: "Empresa Cliente 5",
+          sector: "Salud",
+          logo: "/images/clients/cliente-05.webp",
+          alt: "Logo Empresa Cliente 5",
+        },
+        {
+          id: "cliente-06",
+          name: "Empresa Cliente 6",
+          sector: "Educación",
+          logo: "/images/clients/cliente-06.webp",
+          alt: "Logo Empresa Cliente 6",
+        },
+        {
+          id: "cliente-07",
+          name: "Empresa Cliente 7",
+          sector: "Agroindustria",
+          logo: "/images/clients/cliente-07.webp",
+          alt: "Logo Empresa Cliente 7",
+        },
+        {
+          id: "cliente-08",
+          name: "Empresa Cliente 8",
+          sector: "Servicios",
+          logo: "/images/clients/cliente-08.webp",
+          alt: "Logo Empresa Cliente 8",
+        },
+      ],
     },
     testimonials: {
       eyebrow: "Reseñas",
@@ -726,14 +904,14 @@ export const siteContent: SiteContent = {
         { id: 5, rating: 5, authorName: "Marcela T.", date: "2026-07-30", comment: "La alarma avisó al instante cuando alguien intentó entrar. Hoy estoy mucho más tranquila." },
         { id: 6, rating: 5, authorName: "Felipe C.", date: "2026-07-18", comment: "Siempre responden cuando los necesito. El soporte después de instalar es real." },
         { id: 7, rating: 4, authorName: "Andrea L.", date: "2026-07-02", comment: "Las balizas dejaron la entrada del estacionamiento mucho más segura." },
-        { id: 8, rating: 5, authorName: "Hernán V.", date: "2026-06-20", comment: "Primero hicieron un diagnóstico y recién después cotizaron. Eso me dio confianza." }
-      ]
+        { id: 8, rating: 5, authorName: "Hernán V.", date: "2026-06-20", comment: "Primero hicieron un diagnóstico y recién después cotizaron. Eso me dio confianza." },
+      ],
     },
     contact: {
       eyebrow: "Contacto",
       titleParts: [
         { text: "Hablemos de " },
-        { text: "tu seguridad.", highlight: true }
+        { text: "tu seguridad.", highlight: true },
       ],
       intro: "Cuéntanos qué necesitas y te respondemos con una propuesta.",
       channelsTitle: "Contáctanos",
@@ -772,7 +950,7 @@ export const siteContent: SiteContent = {
             type: "select",
             placeholder: "Selecciona un servicio",
             required: false,
-            options: SERVICES.map(s => ({ label: s.label, value: s.id }))
+            options: SERVICES.map((s) => ({ label: s.label, value: s.id })),
           },
           {
             name: "message",
