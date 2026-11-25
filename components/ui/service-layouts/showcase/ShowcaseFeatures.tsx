@@ -5,10 +5,15 @@ import type { ShowcaseFeature } from "@/content/site";
 
 interface ShowcaseFeaturesProps {
   features: readonly ShowcaseFeature[];
+  showAllOnMobile?: boolean;
   className?: string;
 }
 
-export function ShowcaseFeatures({ features, className }: ShowcaseFeaturesProps) {
+export function ShowcaseFeatures({
+  features,
+  showAllOnMobile = false,
+  className,
+}: ShowcaseFeaturesProps) {
   return (
     <ul
       role="list"
@@ -22,9 +27,9 @@ export function ShowcaseFeatures({ features, className }: ShowcaseFeaturesProps)
             key={`${feat.title}-${index}`}
             className={cn(
               "flex items-start gap-3.5 py-2.5 first:pt-0 last:pb-0 md:py-3",
-              // En móvil mostrar máx. 3 features; si la altura de pantalla es <= 680px (ej. 360x640), mostrar máx. 2
-              index >= 3 && "hidden md:flex",
-              index === 2 &&
+              !showAllOnMobile && index >= 3 && "hidden md:flex",
+              !showAllOnMobile &&
+                index === 2 &&
                 "[@media(max-height:680px)]:hidden md:[@media(max-height:680px)]:flex"
             )}
           >
@@ -48,7 +53,12 @@ export function ShowcaseFeatures({ features, className }: ShowcaseFeaturesProps)
               </div>
 
               {feat.description && (
-                <p className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-muted-text md:line-clamp-none md:text-sm">
+                <p
+                  className={cn(
+                    "mt-0.5 text-xs leading-relaxed text-muted-text md:text-sm",
+                    !showAllOnMobile && "line-clamp-2 md:line-clamp-none"
+                  )}
+                >
                   {feat.description}
                 </p>
               )}

@@ -7,13 +7,19 @@ import { ContactForm } from "./ContactForm";
 import { OrbSlot } from "@/components/ui/OrbSlot";
 import { SocialLinks } from "@/components/ui/SocialLinks";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
-import { FaWhatsapp } from "react-icons/fa6";
 
 export default function Contact() {
-  const { eyebrow, titleParts, intro, email, phone, whatsapp } = siteContent.sections.contact;
+  const { eyebrow, titleParts, intro, channelsTitle, phone, whatsapp } =
+    siteContent.sections.contact;
+
   const whatsappHref = getWhatsAppUrl(
     whatsapp.number,
     "Hola, me gustaría solicitar más información o un diagnóstico de seguridad."
+  );
+
+  // Asegura que el botón de WhatsApp abra el mensaje prellenado configurado
+  const contactChannels = siteContent.socials.map((item) =>
+    item.id === "whatsapp" ? { ...item, href: whatsappHref } : item
   );
 
   return (
@@ -38,19 +44,16 @@ export default function Contact() {
               </div>
             </div>
 
-            <Reveal delay={200} className="mt-12 lg:mt-0">
+            <Reveal delay={200} className="mt-4 lg:mt-0">
               <div className="space-y-4">
-                <p className="font-medium text-foreground/80">
-                  Email:{" "}
-                  <a
-                    href={`mailto:${email}`}
-                    className="text-foreground transition-colors hover:text-brand"
-                  >
-                    {email}
-                  </a>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-text">
+                  {channelsTitle}
                 </p>
-                <p className="font-medium text-foreground/80">
-                  Teléfono:{" "}
+
+                <SocialLinks variant="blocks" socials={contactChannels} />
+
+                <p className="pt-2 text-sm font-medium text-foreground/80">
+                  Teléfono directo:{" "}
                   <a
                     href={`tel:${phone.replace(/\s+/g, "")}`}
                     className="text-foreground transition-colors hover:text-brand"
@@ -58,20 +61,6 @@ export default function Contact() {
                     {phone}
                   </a>
                 </p>
-                <p className="flex items-center gap-2 font-medium text-foreground/80">
-                  WhatsApp:{" "}
-                  <a
-                    href={whatsappHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-foreground transition-colors hover:text-brand"
-                  >
-                    <FaWhatsapp className="size-4 text-brand" />
-                    {phone}
-                  </a>
-                </p>
-
-                <SocialLinks className="pt-2" />
               </div>
             </Reveal>
           </div>

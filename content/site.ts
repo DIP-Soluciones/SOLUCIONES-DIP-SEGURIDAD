@@ -228,6 +228,7 @@ export interface ContactContent {
   eyebrow: string;
   titleParts: readonly TitlePart[];
   intro: string;
+  channelsTitle: string;
   email: string;
   phone: string;
   whatsapp: {
@@ -237,7 +238,7 @@ export interface ContactContent {
 }
 
 export interface SocialLink {
-  id: "whatsapp" | "instagram" | "facebook" | "tiktok" | "youtube" | "linkedin";
+  id: "whatsapp" | "instagram" | "facebook" | "email" | "tiktok" | "youtube" | "linkedin";
   label: string;
   href: string;
 }
@@ -337,6 +338,11 @@ export const siteContent: SiteContent = {
       id: "facebook",
       label: "Facebook",
       href: "https://www.facebook.com/",
+    },
+    {
+      id: "email",
+      label: "Correo",
+      href: "mailto:solucionesdipltda@gmail.com",
     },
   ],
 
@@ -730,6 +736,7 @@ export const siteContent: SiteContent = {
         { text: "tu seguridad.", highlight: true }
       ],
       intro: "Cuéntanos qué necesitas y te respondemos con una propuesta.",
+      channelsTitle: "Contáctanos",
       email: "solucionesdipltda@gmail.com",
       phone: "+56966660120",
       whatsapp: {
