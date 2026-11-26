@@ -178,6 +178,29 @@ export interface ProjectsContent {
   items: readonly WorkProject[];
 }
 
+export type SpecializedServiceIconId = "condos" | "solar";
+
+export interface SpecializedServiceItem {
+  id: string;
+  icon: SpecializedServiceIconId;
+  kicker: string;
+  title: string;
+  titleAccent?: string;
+  description: string;
+  highlights: readonly string[];
+  image: string;
+  imageAlt: string;
+  ctaLabel: string;
+  whatsappMessage: string;
+}
+
+export interface SpecializedServicesContent {
+  eyebrow: string;
+  titleParts: readonly TitlePart[];
+  intro: string;
+  items: readonly SpecializedServiceItem[];
+}
+
 export interface FaqItem {
   question: string;
   answer: string;
@@ -295,6 +318,7 @@ export interface FeaturesFlags {
   clients: boolean;
   testimonials: boolean;
   featuredProducts: boolean;
+  specializedServices: boolean;
 }
 
 export interface FloatingCtaContent {
@@ -316,6 +340,7 @@ export interface SiteContent {
     solutions: SolutionsContent;
     featuredProducts: FeaturedProductsContent;
     projects: ProjectsContent;
+    specializedServices: SpecializedServicesContent;
     banner: BannerContent;
     process: ProcessContent;
     stats: StatsContent;
@@ -329,6 +354,8 @@ export interface SiteContent {
 const SERVICES: readonly ServiceCategory[] = [
   { id: "cctv", label: "Cámaras de seguridad" },
   { id: "gates", label: "Portones eléctricos" },
+  { id: "condos", label: "Mantención a condominios" },
+  { id: "solar", label: "Paneles fotovoltaicos y energía solar" },
   { id: "locks", label: "Chapas de seguridad" },
   { id: "alarms", label: "Alarmas" },
   { id: "beacons", label: "Balizas" },
@@ -337,8 +364,9 @@ const SERVICES: readonly ServiceCategory[] = [
 
 export const siteContent: SiteContent = {
   meta: {
-    title: "DiP | Seguridad electrónica para hogares y negocios",
-    description: "Cámaras de seguridad, portones eléctricos, chapas, alarmas y balizas. Diagnóstico, instalación y soporte.",
+    title: "DiP | Seguridad electrónica, automatización y energía solar",
+    description:
+      "Cámaras de seguridad, portones eléctricos, mantención a condominios, paneles fotovoltaicos, chapas y alarmas. Diagnóstico, instalación y soporte.",
   },
   brand: {
     name: "DiP",
@@ -358,6 +386,7 @@ export const siteContent: SiteContent = {
     clients: true,
     testimonials: true,
     featuredProducts: true,
+    specializedServices: true,
   },
   floatingCta: {
     label: "Solicitar diagnóstico",
@@ -392,16 +421,17 @@ export const siteContent: SiteContent = {
   sections: {
     hero: {
       eyebrow: "Seguridad electrónica",
-      lead: "DiP Soluciones",
+      lead: "DiP resguarda tu",
       rotatingWords: [
-        "Seguridad",
-        "Cámaras",
-        "Alarmas",
-        "Portones",
-        "Sensores",
-        "Automatización",
+        "seguridad",
+        "privacidad",
+        "hogar",
+        "negocio",
+        "familia",
+        "tranquilidad",
       ],
-      subtitle: "Cámaras, alarmas, portones y control de acceso instalados con criterio. Más control, menos preocupaciones.",
+      subtitle:
+        "Cámaras, alarmas, portones y control de acceso instalados con criterio. Más control, menos preocupaciones.",
       ctaLabel: "Solicitar diagnóstico",
       ctaHref: "#diagnostico",
       secondaryLabel: "Ver cómo trabajamos",
@@ -451,26 +481,22 @@ export const siteContent: SiteContent = {
               icon: "power",
               title: "Apertura Nitro en 3 seg",
               tag: "Exclusiva",
-              // CONFIRMAR con ficha técnica
               description: "Desplazamiento rápido del portón corredera.",
             },
             {
               icon: "cpu",
               title: "Cierre suave Smart Close",
-              // CONFIRMAR con ficha técnica
               description: "Desaceleración controlada al finalizar el recorrido.",
             },
             {
               icon: "battery",
               title: "Bivolt 127/220V",
               tag: "Único modelo",
-              // CONFIRMAR con ficha técnica
               description: "Compatible con redes eléctricas de 127V y 220V.",
             },
             {
               icon: "shield",
               title: "2 años de garantía",
-              // TODO: confirmar garantía con el proveedor
               description: "Respaldo de fábrica incluido en el equipo.",
             },
           ],
@@ -497,25 +523,21 @@ export const siteContent: SiteContent = {
               icon: "eye",
               title: "Imágenes 1080p nítidas",
               tag: "Full HD",
-              // CONFIRMAR con ficha técnica
               description: "Transmisión de video en alta definición sin pérdida.",
             },
             {
               icon: "wifi",
               title: "Largo alcance por coaxial",
-              // CONFIRMAR con ficha técnica
               description: "Señal estable a distancia mediante cableado coaxial.",
             },
             {
               icon: "bell",
               title: "Audio sobre el mismo cable",
-              // CONFIRMAR con ficha técnica
               description: "Transmisión de audio integrada sin tendidos adicionales.",
             },
             {
               icon: "shield",
               title: "Infrarrojo nocturno",
-              // CONFIRMAR con ficha técnica
               description: "Vigilancia continua en condiciones de oscuridad.",
             },
           ],
@@ -542,25 +564,21 @@ export const siteContent: SiteContent = {
               icon: "power",
               title: "Arrastre hasta 1000 kg",
               tag: "Heavy",
-              // CONFIRMAR con ficha técnica
               description: "Diseñado para portones pesados y accesos de alto tráfico.",
             },
             {
               icon: "battery",
               title: "Batería respaldo 24VDC",
-              // CONFIRMAR con ficha técnica
               description: "Operación continua incluso ante cortes de suministro eléctrico.",
             },
             {
               icon: "shield",
               title: "Sistema anti-aplastamiento",
-              // CONFIRMAR con ficha técnica
               description: "Detección de obstáculos para mayor seguridad en el cierre.",
             },
             {
               icon: "cpu",
               title: "Central inteligente",
-              // CONFIRMAR con ficha técnica
               description: "Gestión electrónica de maniobras y control de acceso.",
             },
           ],
@@ -587,25 +605,21 @@ export const siteContent: SiteContent = {
               icon: "eye",
               title: "Óptica F1.0 gran apertura",
               tag: "24/7",
-              // CONFIRMAR con ficha técnica
               description: "Mayor captación de luz junto a iluminación suplementaria.",
             },
             {
               icon: "wifi",
               title: "Color real sin luz",
-              // CONFIRMAR con ficha técnica
               description: "Imágenes a color durante todo el día y la noche.",
             },
             {
               icon: "cpu",
               title: "Detección personas y autos",
-              // CONFIRMAR con ficha técnica
               description: "Identificación inteligente para reducir falsas alertas.",
             },
             {
               icon: "shield",
               title: "Certificación IP67",
-              // CONFIRMAR con ficha técnica
               description: "Protección frente a polvo y lluvia para exterior.",
             },
           ],
@@ -865,26 +879,79 @@ export const siteContent: SiteContent = {
         },
       ],
     },
+    specializedServices: {
+      eyebrow: "Servicios especializados",
+      titleParts: [
+        { text: "Soporte continuo y " },
+        { text: "energía limpia.", highlight: true },
+      ],
+      intro:
+        "Soluciones integrales para comunidades residenciales y proyectos de autonomía energética.",
+      items: [
+        {
+          id: "mantencion-condominios",
+          icon: "condos",
+          kicker: "Comunidades y Edificios",
+          title: "Mantención a",
+          titleAccent: "Condominios",
+          description:
+            "Planes preventivos y correctivos en automatización y electricidad para asegurar la continuidad operativa de accesos y áreas comunes.",
+          highlights: [
+            "Mantención preventiva y reparación de portones automáticos de alto tráfico",
+            "Revisión y normalización de tableros, iluminación y circuitos eléctricos comunes",
+            "Soporte en control de acceso, citofonía, chapas eléctricas y cámaras perimetrales",
+            "Atención programada y respuesta rápida ante fallas críticas",
+          ],
+          image: "/images/services/condominios.webp",
+          imageAlt: "Mantención de automatización y electricidad en condominios",
+          ctaLabel: "Cotizar mantención",
+          whatsappMessage:
+            "Hola, me interesa cotizar un plan de mantención de automatización / electricidad para un condominio.",
+        },
+        {
+          id: "energia-solar",
+          icon: "solar",
+          kicker: "Eficiencia y Respaldo",
+          title: "Paneles Fotovoltaicos y",
+          titleAccent: "Energía Solar",
+          description:
+            "Diseño e instalación de sistemas solares para reducir el consumo eléctrico y mantener tus equipos críticos operativos ante cortes de suministro.",
+          highlights: [
+            "Instalación de paneles fotovoltaicos On-Grid y sistemas híbridos con baterías",
+            "Respaldo energético continuo para portones, cámaras y sistemas de seguridad",
+            "Dimensionamiento técnico a medida para hogares, empresas y condominios",
+            "Montaje certificado con protecciones eléctricas y monitoreo desde el celular",
+          ],
+          image: "/images/services/energia-solar.webp",
+          imageAlt: "Instalación de paneles fotovoltaicos y energía solar",
+          ctaLabel: "Cotizar proyecto solar",
+          whatsappMessage:
+            "Hola, me interesa cotizar un proyecto de paneles fotovoltaicos / energía solar.",
+        },
+      ],
+    },
     banner: {
       title: "La tecnología más avanzada es la que te deja vivir tranquilo.",
       faqTitle: "Preguntas frecuentes",
-      // CONFIRMAR con el cliente
       faqs: [
         {
           question: "¿Qué servicios ofrecen?",
-          answer: "Cámaras de seguridad, portones eléctricos, chapas de seguridad, alarmas y balizas, para hogares y negocios.",
+          answer:
+            "Cámaras de seguridad, portones eléctricos, mantención a condominios (automatización y electricidad), paneles fotovoltaicos, chapas de seguridad, alarmas y balizas.",
+        },
+        {
+          question: "¿Realizan planes de mantención para condominios?",
+          answer:
+            "Sí, ofrecemos mantención preventiva y correctiva en automatización de portones, control de acceso e instalaciones eléctricas de áreas comunes.",
         },
         {
           question: "¿Cómo funciona el diagnóstico?",
-          answer: "Analizamos los riesgos y puntos críticos de tu espacio, diseñamos una solución a tu medida y recién después cotizamos.",
+          answer:
+            "Analizamos los riesgos y requerimientos técnicos de tu espacio, diseñamos una solución a tu medida y recién después cotizamos.",
         },
         {
           question: "¿Dan soporte después de la instalación?",
           answer: "Sí, hay soporte y seguimiento después de la entrega.",
-        },
-        {
-          question: "¿Cómo pido una cotización?",
-          answer: "Completa el formulario de contacto o escríbenos por WhatsApp y te respondemos con una propuesta.",
         },
       ],
     },
