@@ -6,6 +6,7 @@ import Projects from "@/components/sections/Projects";
 import Banner from "@/components/sections/Banner";
 import Process from "@/components/sections/Process";
 import Stats from "@/components/sections/Stats";
+import Clients from "@/components/sections/Clients";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <Banner />
       <Process />
       <Stats />
+      <Clients />
       <Testimonials />
       <Contact />
     </main>

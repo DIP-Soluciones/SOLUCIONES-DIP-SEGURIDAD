@@ -89,7 +89,7 @@ export default function Hero() {
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[1.1]">
             <span className="sr-only">
-              DiP resguarda tu {rotatingWords.join(", ")}
+              DiP Soluciona {rotatingWords.join(", ")}
             </span>
 
             <span aria-hidden="true" className="flex flex-col items-start gap-2">
@@ -104,7 +104,7 @@ export default function Hero() {
                     className="object-contain object-left invert brightness-200" 
                   />
                 </span>
-                <span className="text-foreground leading-none">resguarda tu</span>
+                <span className="text-foreground leading-none">Soluciones</span>
               </span>
 
               <span className="relative block overflow-hidden pb-[0.15em] text-brand">

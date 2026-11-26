@@ -3,39 +3,57 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import {
+  Camera,
   ChevronLeft,
   ChevronRight,
+  DoorClosed,
   Expand,
   Images,
+  Lightbulb,
+  Volume2,
   X,
 } from "lucide-react";
-import { siteContent, type WorkProject } from "@/content/site";
+import type { LucideIcon } from "lucide-react";
+import {
+  siteContent,
+  type ProjectCategoryId,
+  type WorkProject,
+} from "@/content/site";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { serviceIcons, type ServiceIconId } from "@/components/ui/service-icons";
 import { cn } from "@/lib/utils";
+
+const projectCategoryIcons: Record<ProjectCategoryId, LucideIcon> = {
+  camaras: Camera,
+  portones: DoorClosed,
+  audio: Volume2,
+  iluminacion: Lightbulb,
+};
 
 function ProjectPhoto({
   project,
+  categoryLabel,
   sizes,
   priority = false,
+  fit = "cover",
 }: {
   project: WorkProject;
+  categoryLabel: string;
   sizes: string;
   priority?: boolean;
+  fit?: "cover" | "contain";
 }) {
   const [failed, setFailed] = useState(false);
-  const CategoryIcon =
-    serviceIcons[project.category as ServiceIconId] ?? serviceIcons.other;
+  const CategoryIcon = projectCategoryIcons[project.category];
 
   if (failed) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-surface p-4 text-center">
         <CategoryIcon className="size-10 text-brand/60" strokeWidth={1.5} />
         <span className="line-clamp-2 text-xs text-muted-text">
-          {project.title}
+          {project.title || categoryLabel}
         </span>
       </div>
     );
@@ -44,11 +62,15 @@ function ProjectPhoto({
   return (
     <Image
       src={project.image}
-      alt={project.alt}
+      alt={project.alt || project.title || categoryLabel}
       fill
       sizes={sizes}
       priority={priority}
-      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+      className={cn(
+        fit === "contain"
+          ? "object-contain p-2 sm:p-4"
+          : "object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+      )}
       onError={() => setFailed(true)}
     />
   );
@@ -64,6 +86,7 @@ export default function Projects() {
     modalSubtitle,
     allFilterLabel,
     closeLabel,
+    categories,
     items,
   } = siteContent.sections.projects;
 
@@ -74,20 +97,18 @@ export default function Projects() {
   const previewItems = items.slice(0, 5);
   const remainingCount = Math.max(0, items.length - previewItems.length);
 
-  // Mapa rápido de id -> nombre legible de categoría
   const categoryLabels = useMemo(() => {
     const map: Record<string, string> = {};
-    for (const srv of siteContent.services) {
-      map[srv.id] = srv.label;
+    for (const cat of categories) {
+      map[cat.id] = cat.label;
     }
     return map;
-  }, []);
+  }, [categories]);
 
-  // Solo muestra en el filtro categorías que realmente tienen fotos cargadas
   const availableCategories = useMemo(() => {
     const presentIds = new Set(items.map((item) => item.category));
-    return siteContent.services.filter((srv) => presentIds.has(srv.id));
-  }, [items]);
+    return categories.filter((cat) => presentIds.has(cat.id));
+  }, [categories, items]);
 
   const filteredItems = useMemo(() => {
     if (activeCategory === "all") return items;
@@ -111,7 +132,6 @@ export default function Projects() {
     setLightboxIndex(null);
   };
 
-  // Bloqueo de scroll y navegación por teclado (Escape / Flechas)
   useEffect(() => {
     if (!isModalOpen) return;
 
@@ -189,6 +209,7 @@ export default function Projects() {
             {previewItems.map((project, index) => {
               const isHero = index === 0;
               const isFifthWithMore = index === 4 && remainingCount > 0;
+              const catLabel = categoryLabels[project.category] ?? "Proyecto";
 
               return (
                 <button
@@ -200,7 +221,7 @@ export default function Projects() {
                   aria-label={
                     isFifthWithMore
                       ? `${viewMoreLabel}: ver las ${items.length} fotos`
-                      : `Ampliar foto: ${project.title}`
+                      : `Ampliar foto: ${project.title || catLabel}`
                   }
                   className={cn(
                     "group relative overflow-hidden rounded-card border border-line bg-surface text-left transition-colors duration-300 hover:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand",
@@ -211,6 +232,7 @@ export default function Projects() {
                 >
                   <ProjectPhoto
                     project={project}
+                    categoryLabel={catLabel}
                     priority={isHero}
                     sizes={
                       isHero
@@ -219,28 +241,28 @@ export default function Projects() {
                     }
                   />
 
-                  {/* Degradado inferior para legibilidad */}
                   <div
                     aria-hidden="true"
                     className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/90 via-background/20 to-transparent opacity-85 transition-opacity group-hover:opacity-95"
                   />
 
-                  {/* Etiqueta e ícono expandir */}
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3.5 sm:p-4">
                     <div className="min-w-0">
                       <span className="inline-block rounded-full bg-brand/20 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand backdrop-blur-xs">
-                        {categoryLabels[project.category] ?? "Proyecto"}
+                        {catLabel}
                       </span>
-                      <p
-                        className={cn(
-                          "mt-1 font-semibold leading-snug text-foreground",
-                          isHero
-                            ? "line-clamp-2 text-sm sm:text-base md:text-lg"
-                            : "line-clamp-1 text-xs sm:text-sm"
-                        )}
-                      >
-                        {project.title}
-                      </p>
+                      {project.title && (
+                        <p
+                          className={cn(
+                            "mt-1 font-semibold leading-snug text-foreground",
+                            isHero
+                              ? "line-clamp-2 text-sm sm:text-base md:text-lg"
+                              : "line-clamp-1 text-xs sm:text-sm"
+                          )}
+                        >
+                          {project.title}
+                        </p>
+                      )}
                     </div>
 
                     <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-line bg-background/80 text-foreground transition-colors group-hover:border-brand group-hover:bg-brand group-hover:text-white">
@@ -248,7 +270,6 @@ export default function Projects() {
                     </span>
                   </div>
 
-                  {/* Overlay "+N fotos" en la 5ta tarjeta si hay más de 5 */}
                   {isFifthWithMore && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/75 p-4 text-center backdrop-blur-xs transition-colors group-hover:bg-background/65">
                       <span className="text-2xl font-extrabold text-foreground sm:text-3xl">
@@ -296,7 +317,7 @@ export default function Projects() {
             className="relative flex h-[90svh] w-full max-w-6xl flex-col overflow-hidden rounded-card border border-line bg-surface shadow-card"
           >
             {/* Cabecera del Modal */}
-            <div className="flex items-start justify-between gap-4 border-b border-line px-5 py-4 sm:px-6">
+            <div className="flex shrink-0 items-start justify-between gap-4 border-b border-line px-5 py-4 sm:px-6">
               <div>
                 <h3 className="text-lg font-extrabold tracking-tight text-foreground sm:text-xl">
                   {modalTitle}
@@ -317,7 +338,7 @@ export default function Projects() {
             </div>
 
             {/* Píldoras de filtro por categoría */}
-            <div className="flex items-center gap-2 overflow-x-auto border-b border-line px-5 py-3 sm:px-6">
+            <div className="flex shrink-0 items-center gap-2 overflow-x-auto border-b border-line px-5 py-3 sm:px-6">
               <button
                 type="button"
                 onClick={() => {
@@ -362,7 +383,7 @@ export default function Projects() {
             {/* Cuerpo del Modal: Lightbox individual o Grilla completa */}
             {activeLightboxItem && lightboxIndex !== null ? (
               <div className="flex min-h-0 flex-1 flex-col justify-between bg-background p-4 sm:p-6">
-                <div className="flex items-center justify-between gap-2 pb-3">
+                <div className="flex shrink-0 items-center justify-between gap-2 pb-3">
                   <button
                     type="button"
                     onClick={() => setLightboxIndex(null)}
@@ -377,10 +398,15 @@ export default function Projects() {
                   </span>
                 </div>
 
-                {/* Imagen ampliada */}
+                {/* Imagen ampliada ajustable completa sin recortes */}
                 <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl border border-line bg-surface">
                   <ProjectPhoto
+                    key={activeLightboxItem.id}
                     project={activeLightboxItem}
+                    categoryLabel={
+                      categoryLabels[activeLightboxItem.category] ?? "Proyecto"
+                    }
+                    fit="contain"
                     sizes="(max-width: 1024px) 95vw, 75vw"
                   />
 
@@ -416,14 +442,16 @@ export default function Projects() {
                   )}
                 </div>
 
-                {/* Pie con categoría y descripción */}
-                <div className="pt-4">
+                {/* Pie con categoría y descripción opcional */}
+                <div className="shrink-0 pt-3 sm:pt-4">
                   <span className="inline-block rounded-full bg-brand/15 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-brand">
                     {categoryLabels[activeLightboxItem.category] ?? "Proyecto"}
                   </span>
-                  <h4 className="mt-1 text-base font-bold text-foreground sm:text-lg">
-                    {activeLightboxItem.title}
-                  </h4>
+                  {activeLightboxItem.title && (
+                    <h4 className="mt-1 text-base font-bold text-foreground sm:text-lg">
+                      {activeLightboxItem.title}
+                    </h4>
+                  )}
                   {activeLightboxItem.location && (
                     <p className="text-xs text-muted-text">
                       {activeLightboxItem.location}
@@ -434,31 +462,39 @@ export default function Projects() {
             ) : (
               <div className="min-h-0 flex-1 overflow-y-auto p-5 sm:p-6">
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-                  {filteredItems.map((project, index) => (
-                    <button
-                      key={project.id}
-                      type="button"
-                      onClick={() => setLightboxIndex(index)}
-                      className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-line bg-background text-left transition-colors hover:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-                    >
-                      <ProjectPhoto
-                        project={project}
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      />
-                      <div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/90 via-background/15 to-transparent"
-                      />
-                      <div className="absolute inset-x-0 bottom-0 p-3">
-                        <span className="block text-[10px] font-bold uppercase tracking-wider text-brand">
-                          {categoryLabels[project.category] ?? "Proyecto"}
-                        </span>
-                        <p className="mt-0.5 line-clamp-2 text-xs font-semibold text-foreground">
-                          {project.title}
-                        </p>
-                      </div>
-                    </button>
-                  ))}
+                  {filteredItems.map((project, index) => {
+                    const catLabel =
+                      categoryLabels[project.category] ?? "Proyecto";
+
+                    return (
+                      <button
+                        key={project.id}
+                        type="button"
+                        onClick={() => setLightboxIndex(index)}
+                        className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-line bg-background text-left transition-colors hover:border-brand/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                      >
+                        <ProjectPhoto
+                          project={project}
+                          categoryLabel={catLabel}
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        />
+                        <div
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/90 via-background/15 to-transparent"
+                        />
+                        <div className="absolute inset-x-0 bottom-0 p-3">
+                          <span className="block text-[10px] font-bold uppercase tracking-wider text-brand">
+                            {catLabel}
+                          </span>
+                          {project.title && (
+                            <p className="mt-0.5 line-clamp-2 text-xs font-semibold text-foreground">
+                              {project.title}
+                            </p>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}

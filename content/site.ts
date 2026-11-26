@@ -154,10 +154,12 @@ export interface FeaturedProductsContent {
   items: readonly FeaturedProduct[];
 }
 
+export type ProjectCategoryId = "camaras" | "portones" | "audio" | "iluminacion";
+
 export interface WorkProject {
   id: string;
-  title: string;
-  category: string;
+  title?: string;
+  category: ProjectCategoryId;
   location?: string;
   image: string;
   alt: string;
@@ -172,6 +174,7 @@ export interface ProjectsContent {
   modalSubtitle: string;
   allFilterLabel: string;
   closeLabel: string;
+  categories: readonly { id: ProjectCategoryId; label: string }[];
   items: readonly WorkProject[];
 }
 
@@ -389,14 +392,14 @@ export const siteContent: SiteContent = {
   sections: {
     hero: {
       eyebrow: "Seguridad electrónica",
-      lead: "DiP resguarda tu",
+      lead: "DiP Soluciones",
       rotatingWords: [
-        "seguridad",
-        "privacidad",
-        "hogar",
-        "negocio",
-        "familia",
-        "tranquilidad",
+        "Seguridad",
+        "Cámaras",
+        "Alarmas",
+        "Portones",
+        "Sensores",
+        "Automatización",
       ],
       subtitle: "Cámaras, alarmas, portones y control de acceso instalados con criterio. Más control, menos preocupaciones.",
       ctaLabel: "Solicitar diagnóstico",
@@ -704,62 +707,161 @@ export const siteContent: SiteContent = {
       modalSubtitle: "Explora nuestras instalaciones realizadas por categoría.",
       allFilterLabel: "Todos",
       closeLabel: "Cerrar galería",
+      categories: [
+        { id: "camaras", label: "Cámaras" },
+        { id: "portones", label: "Portones" },
+        { id: "audio", label: "Audio" },
+        { id: "iluminacion", label: "Iluminación" },
+      ],
       items: [
+        // --- Primeros 8 con sus títulos ---
         {
           id: "trabajo-01",
           title: "Automatización portón corredera residencial",
-          category: "gates",
+          category: "portones",
           image: "/images/projects/trabajo-01.webp",
           alt: "Instalación de motor para portón corredera en acceso residencial",
         },
         {
           id: "trabajo-02",
           title: "Sistema CCTV perimetral Full HD",
-          category: "cctv",
+          category: "camaras",
           image: "/images/projects/trabajo-02.webp",
           alt: "Cámaras de seguridad instaladas en exterior de empresa",
         },
         {
           id: "trabajo-03",
           title: "Control de acceso y chapa eléctrica",
-          category: "locks",
+          category: "portones",
           image: "/images/projects/trabajo-03.webp",
           alt: "Chapa de seguridad instalada en puerta de acceso principal",
         },
         {
           id: "trabajo-04",
           title: "Central de alarma y sensores interiores",
-          category: "alarms",
+          category: "camaras",
           image: "/images/projects/trabajo-04.webp",
           alt: "Panel de alarma instalado y configurado en oficina",
         },
         {
           id: "trabajo-05",
           title: "Baliza de señalización vehicular",
-          category: "beacons",
+          category: "iluminacion",
           image: "/images/projects/trabajo-05.webp",
           alt: "Baliza luminosa instalada en salida de estacionamiento",
         },
         {
           id: "trabajo-06",
           title: "Motor industrial serie Heavy",
-          category: "gates",
+          category: "portones",
           image: "/images/projects/trabajo-06.webp",
           alt: "Motor industrial instalado en portón de alto tráfico",
         },
         {
           id: "trabajo-07",
           title: "Cámaras visión nocturna a color",
-          category: "cctv",
+          category: "camaras",
           image: "/images/projects/trabajo-07.webp",
           alt: "Cámara de seguridad a color instalada en fachada",
         },
         {
           id: "trabajo-08",
           title: "Canalización y rack de videovigilancia",
-          category: "cctv",
+          category: "camaras",
           image: "/images/projects/trabajo-08.webp",
           alt: "Grabador DVR y cableado estructurado ordenado",
+        },
+
+        // --- Trabajos 09 al 23 sin título (organizados por categoría) ---
+        {
+          id: "trabajo-09",
+          category: "camaras",
+          image: "/images/projects/trabajo-09.webp",
+          alt: "Instalación de cámaras de seguridad",
+        },
+        {
+          id: "trabajo-10",
+          category: "camaras",
+          image: "/images/projects/trabajo-10.webp",
+          alt: "Instalación de cámaras de seguridad",
+        },
+        {
+          id: "trabajo-11",
+          category: "camaras",
+          image: "/images/projects/trabajo-11.webp",
+          alt: "Instalación de cámaras de seguridad",
+        },
+        {
+          id: "trabajo-12",
+          category: "camaras",
+          image: "/images/projects/trabajo-12.webp",
+          alt: "Instalación de cámaras de seguridad",
+        },
+        {
+          id: "trabajo-13",
+          category: "portones",
+          image: "/images/projects/trabajo-13.webp",
+          alt: "Instalación de portón eléctrico",
+        },
+        {
+          id: "trabajo-14",
+          category: "portones",
+          image: "/images/projects/trabajo-14.webp",
+          alt: "Instalación de portón eléctrico",
+        },
+        {
+          id: "trabajo-15",
+          category: "portones",
+          image: "/images/projects/trabajo-15.webp",
+          alt: "Instalación de portón eléctrico",
+        },
+        {
+          id: "trabajo-16",
+          category: "portones",
+          image: "/images/projects/trabajo-16.webp",
+          alt: "Instalación de portón eléctrico",
+        },
+        {
+          id: "trabajo-17",
+          category: "audio",
+          image: "/images/projects/trabajo-17.webp",
+          alt: "Instalación de sistema de audio",
+        },
+        {
+          id: "trabajo-18",
+          category: "audio",
+          image: "/images/projects/trabajo-18.webp",
+          alt: "Instalación de sistema de audio",
+        },
+        {
+          id: "trabajo-19",
+          category: "audio",
+          image: "/images/projects/trabajo-19.webp",
+          alt: "Instalación de sistema de audio",
+        },
+        {
+          id: "trabajo-20",
+          category: "iluminacion",
+          image: "/images/projects/trabajo-20.webp",
+          alt: "Instalación de iluminación",
+        },
+        {
+          id: "trabajo-21",
+          category: "iluminacion",
+          image: "/images/projects/trabajo-21.webp",
+          alt: "Instalación de iluminación",
+        },
+        {
+          id: "trabajo-22",
+          category: "iluminacion",
+          image: "/images/projects/trabajo-22.webp",
+          alt: "Instalación de iluminación",
+        },
+        {
+          id: "trabajo-23",
+          category: "iluminacion",
+          image: "/images/projects/trabajo-23.webp",
+          alt: "Instalación de iluminación",
         },
       ],
     },
@@ -826,63 +928,83 @@ export const siteContent: SiteContent = {
         { text: "confían en DiP.", highlight: true },
       ],
       intro: "Instituciones, industrias y comercios que respaldan la calidad de nuestras implementaciones.",
-      // Reemplaza los nombres y guarda los logos en public/images/clients/cliente-01.webp, etc.
       items: [
         {
           id: "cliente-01",
-          name: "Empresa Cliente 1",
-          sector: "Industria",
+          name: "Don Mario Repuestos",
+          sector: "Automotriz",
           logo: "/images/clients/cliente-01.webp",
-          alt: "Logo Empresa Cliente 1",
+          alt: "Logo Don Mario Repuestos",
         },
         {
           id: "cliente-02",
-          name: "Empresa Cliente 2",
-          sector: "Comercio",
+          name: "Comercial CyC Chilemat",
+          sector: "Ferretería y Construcción",
           logo: "/images/clients/cliente-02.webp",
-          alt: "Logo Empresa Cliente 2",
+          alt: "Logo Comercial CyC Chilemat",
         },
         {
           id: "cliente-03",
-          name: "Empresa Cliente 3",
-          sector: "Logística",
+          name: "Chanco",
+          sector: "Comercio",
           logo: "/images/clients/cliente-03.webp",
-          alt: "Logo Empresa Cliente 3",
+          alt: "Logo Chanco",
         },
         {
           id: "cliente-04",
-          name: "Empresa Cliente 4",
-          sector: "Inmobiliaria",
+          name: "Comercial Espinoza Hnos.",
+          sector: "Ferretería Técnica",
           logo: "/images/clients/cliente-04.webp",
-          alt: "Logo Empresa Cliente 4",
+          alt: "Logo Comercial Espinoza Hnos.",
         },
         {
           id: "cliente-05",
-          name: "Empresa Cliente 5",
-          sector: "Salud",
+          name: "Mayorista DyL",
+          sector: "Distribución",
           logo: "/images/clients/cliente-05.webp",
-          alt: "Logo Empresa Cliente 5",
+          alt: "Logo Mayorista DyL",
         },
         {
           id: "cliente-06",
-          name: "Empresa Cliente 6",
-          sector: "Educación",
+          name: "SportPro TV",
+          sector: "Medios",
           logo: "/images/clients/cliente-06.webp",
-          alt: "Logo Empresa Cliente 6",
+          alt: "Logo SportPro TV",
         },
         {
           id: "cliente-07",
-          name: "Empresa Cliente 7",
-          sector: "Agroindustria",
+          name: "Farmacia Chanco",
+          sector: "Salud",
           logo: "/images/clients/cliente-07.webp",
-          alt: "Logo Empresa Cliente 7",
+          alt: "Logo Farmacia Chanco",
         },
         {
           id: "cliente-08",
-          name: "Empresa Cliente 8",
-          sector: "Servicios",
+          name: "Universidad de Talca",
+          sector: "Educación",
           logo: "/images/clients/cliente-08.webp",
-          alt: "Logo Empresa Cliente 8",
+          alt: "Logo Universidad de Talca",
+        },
+        {
+          id: "cliente-09",
+          name: "Empresa Cliente 9",
+          sector: "Industria",
+          logo: "/images/clients/cliente-09.webp",
+          alt: "Logo Empresa Cliente 9",
+        },
+        {
+          id: "cliente-10",
+          name: "Empresa Cliente 10",
+          sector: "Servicios",
+          logo: "/images/clients/cliente-10.webp",
+          alt: "Logo Empresa Cliente 10",
+        },
+        {
+          id: "cliente-11",
+          name: "Empresa Cliente 11",
+          sector: "Comercio",
+          logo: "/images/clients/cliente-11.webp",
+          alt: "Logo Empresa Cliente 11",
         },
       ],
     },
