@@ -5,7 +5,7 @@ export function BrandLogo({ className = "" }: { className?: string }) {
     <div className={`relative flex items-center shrink-0 h-10 w-36 overflow-hidden ${className}`}>
       <Image
         src="/images/dip-logo.webp"
-        alt="DiP Seguridad"
+        alt="Soluciones DiP"
         fill
         priority
         className="object-contain object-left"

@@ -8,9 +8,9 @@ export function FloatingSocials() {
   const { email, whatsapp } = siteContent.sections.contact;
 
   const instagramLink =
-    socials.find((s) => s.id === "instagram")?.href || "https://www.instagram.com/";
+    socials.find((s) => s.id === "instagram")?.href || "https://www.instagram.com/soluciones_dip?knvt=ajVqMW5qeGw5aGUz";
   const facebookLink =
-    socials.find((s) => s.id === "facebook")?.href || "https://www.facebook.com/";
+    socials.find((s) => s.id === "facebook")?.href || "https://www.facebook.com/share/1BKSnmHuTN/";
   const whatsappCustomLink = socials.find((s) => s.id === "whatsapp")?.href;
   const whatsappHref =
     whatsappCustomLink ||
