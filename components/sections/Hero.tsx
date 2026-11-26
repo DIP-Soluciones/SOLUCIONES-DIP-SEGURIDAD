@@ -89,22 +89,22 @@ export default function Hero() {
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[1.1]">
             <span className="sr-only">
-              DiP Soluciona {rotatingWords.join(", ")}
+              Soluciones DiP {rotatingWords.join(", ")}
             </span>
 
             <span aria-hidden="true" className="flex flex-col items-start gap-2">
               {/* Alineado abajo (items-end) para que repose sobre la base del texto */}
               <span className="flex items-end flex-wrap gap-x-4">
+                <span className="text-foreground leading-none">Soluciones</span>
                 <span className="relative inline-block h-14 sm:h-18 md:h-24 w-28 sm:w-36 md:w-48 shrink-0 translate-y-1 sm:translate-y-1.5 md:translate-y-2">
                   <Image
-                    src="/images/dip-logo-cortado.webp" 
+                    src="/images/dip-logo-cortado.webp"
                     alt="DiP"
                     fill
                     priority
-                    className="object-contain object-left invert brightness-200" 
+                    className="object-contain object-left"
                   />
                 </span>
-                <span className="text-foreground leading-none">Soluciones</span>
               </span>
 
               <span className="relative block overflow-hidden pb-[0.15em] text-brand">

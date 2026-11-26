@@ -362,6 +362,20 @@ const SERVICES: readonly ServiceCategory[] = [
   { id: "other", label: "Otros" },
 ];
 
+const BASE_EXPERIENCE_YEARS = 11;
+const EXPERIENCE_BASE_YEAR = 2026;
+const EXPERIENCE_ROLLOVER_MONTH = 9; // Octubre (0-indexed)
+
+function getExperienceYears(now: Date = new Date()): number {
+  const completedCycles = Math.max(
+    0,
+    now.getFullYear() -
+      EXPERIENCE_BASE_YEAR -
+      (now.getMonth() >= EXPERIENCE_ROLLOVER_MONTH ? 0 : 1)
+  );
+  return BASE_EXPERIENCE_YEARS + completedCycles;
+}
+
 export const siteContent: SiteContent = {
   meta: {
     title: "DiP | Seguridad electrónica, automatización y energía solar",
@@ -423,12 +437,16 @@ export const siteContent: SiteContent = {
       eyebrow: "Seguridad electrónica",
       lead: "DiP resguarda tu",
       rotatingWords: [
-        "seguridad",
-        "privacidad",
-        "hogar",
-        "negocio",
-        "familia",
-        "tranquilidad",
+        "Seguridad",
+        "Privacidad",
+        "Hogar",
+        "Negocio",
+        "Automatización",
+        "Mantención",
+        "Iluminación",
+        "Energía solar",
+        "Audio",
+        "Portones",
       ],
       subtitle:
         "Cámaras, alarmas, portones y control de acceso instalados con criterio. Más control, menos preocupaciones.",
@@ -493,11 +511,6 @@ export const siteContent: SiteContent = {
               title: "Bivolt 127/220V",
               tag: "Único modelo",
               description: "Compatible con redes eléctricas de 127V y 220V.",
-            },
-            {
-              icon: "shield",
-              title: "2 años de garantía",
-              description: "Respaldo de fábrica incluido en el equipo.",
             },
           ],
           cta: {
@@ -728,7 +741,6 @@ export const siteContent: SiteContent = {
         { id: "iluminacion", label: "Iluminación" },
       ],
       items: [
-        // --- Primeros 8 con sus títulos ---
         {
           id: "trabajo-01",
           title: "Automatización portón corredera residencial",
@@ -745,10 +757,10 @@ export const siteContent: SiteContent = {
         },
         {
           id: "trabajo-03",
-          title: "Control de acceso y chapa eléctrica",
-          category: "portones",
+          title: "Iluminacion Interior",
+          category: "iluminacion",
           image: "/images/projects/trabajo-03.webp",
-          alt: "Chapa de seguridad instalada en puerta de acceso principal",
+          alt: "Iluminacion Interior completa para departamento de ventas",
         },
         {
           id: "trabajo-04",
@@ -759,10 +771,10 @@ export const siteContent: SiteContent = {
         },
         {
           id: "trabajo-05",
-          title: "Baliza de señalización vehicular",
-          category: "iluminacion",
+          title: "Control de accesoy de señalización vehicular",
+          category: "audio",
           image: "/images/projects/trabajo-05.webp",
-          alt: "Baliza luminosa instalada en salida de estacionamiento",
+          alt: "Sistema de audio para control vehicular",
         },
         {
           id: "trabajo-06",
@@ -773,109 +785,101 @@ export const siteContent: SiteContent = {
         },
         {
           id: "trabajo-07",
-          title: "Cámaras visión nocturna a color",
-          category: "camaras",
+          title: "Iluminacion led para Farmacia",
+          category: "iluminacion",
           image: "/images/projects/trabajo-07.webp",
-          alt: "Cámara de seguridad a color instalada en fachada",
+          alt: "Iluminación LED instalada en interior de farmacia",
         },
         {
           id: "trabajo-08",
-          title: "Canalización y rack de videovigilancia",
-          category: "camaras",
+          title: "Iluminacion para fachada de condominio",
+          category: "iluminacion",
           image: "/images/projects/trabajo-08.webp",
-          alt: "Grabador DVR y cableado estructurado ordenado",
+          alt: "Iluminación instalada en fachada de condominio",
         },
-
-        // --- Trabajos 09 al 23 sin título (organizados por categoría) ---
         {
           id: "trabajo-09",
-          category: "camaras",
+          category: "iluminacion",
           image: "/images/projects/trabajo-09.webp",
-          alt: "Instalación de cámaras de seguridad",
+          alt: "Instalación de iluminación exterior en condominio",
         },
         {
           id: "trabajo-10",
-          category: "camaras",
+          category: "portones",
           image: "/images/projects/trabajo-10.webp",
-          alt: "Instalación de cámaras de seguridad",
+          alt: "Instalación de portón eléctrico",
         },
         {
           id: "trabajo-11",
           category: "camaras",
           image: "/images/projects/trabajo-11.webp",
-          alt: "Instalación de cámaras de seguridad",
+          alt: "Instalación de monitoreo de cámaras de seguridad",
         },
         {
           id: "trabajo-12",
-          category: "camaras",
+          category: "iluminacion",
           image: "/images/projects/trabajo-12.webp",
-          alt: "Instalación de cámaras de seguridad",
+          alt: "Instalación de iluminación interior para cafetería",
         },
         {
           id: "trabajo-13",
-          category: "portones",
+          category: "camaras",
           image: "/images/projects/trabajo-13.webp",
-          alt: "Instalación de portón eléctrico",
+          alt: "Instalación de camaras interiores",
         },
         {
           id: "trabajo-14",
           category: "portones",
           image: "/images/projects/trabajo-14.webp",
-          alt: "Instalación de portón eléctrico",
+          alt: "Instalación cercado eléctrico",
         },
         {
           id: "trabajo-15",
           category: "portones",
           image: "/images/projects/trabajo-15.webp",
-          alt: "Instalación de portón eléctrico",
+          alt: "Instalación de portón eléctrico e iluminacion  de fachada",
         },
         {
           id: "trabajo-16",
-          category: "portones",
+          category: "camaras",
           image: "/images/projects/trabajo-16.webp",
-          alt: "Instalación de portón eléctrico",
+          alt: "Instalación de camaras de seguridad en exterior",
         },
         {
           id: "trabajo-17",
-          category: "audio",
+          category: "portones",
           image: "/images/projects/trabajo-17.webp",
-          alt: "Instalación de sistema de audio",
+          alt: "Instalación de portón eléctrico y control de acceso",
         },
         {
           id: "trabajo-18",
-          category: "audio",
+          category: "portones",
           image: "/images/projects/trabajo-18.webp",
-          alt: "Instalación de sistema de audio",
+          alt: "Instalación de portón eléctrico y control de acceso en condominio",
         },
         {
           id: "trabajo-19",
-          category: "audio",
+          category: "iluminacion",
           image: "/images/projects/trabajo-19.webp",
-          alt: "Instalación de sistema de audio",
+          alt: "Instalación de sistema de corriente para iluminacion",
         },
         {
           id: "trabajo-20",
-          category: "iluminacion",
+          category: "camaras",
           image: "/images/projects/trabajo-20.webp",
-          alt: "Instalación de iluminación",
+          alt: "Instalación de cámaras de seguridad en interior de supermercado",
         },
         {
           id: "trabajo-21",
-          category: "iluminacion",
+          category: "audio",
           image: "/images/projects/trabajo-21.webp",
-          alt: "Instalación de iluminación",
+          alt: "Instalación de sistema de audio",
         },
         {
           id: "trabajo-22",
-          category: "iluminacion",
+          category: "audio",
           image: "/images/projects/trabajo-22.webp",
-          alt: "Instalación de iluminación",
-        },
-        {
-          id: "trabajo-23",
-          category: "iluminacion",
-          image: "/images/projects/trabajo-23.webp",
-          alt: "Instalación de iluminación",
+          alt: "Instalación de sistema de audio",
         },
       ],
     },
@@ -984,8 +988,14 @@ export const siteContent: SiteContent = {
     stats: {
       eyebrow: "Nuestra trayectoria",
       items: [
-        { value: 20, decimals: 0, prefix: "+", suffix: "", label: "años de experiencia" },
-        { value: 1.3, decimals: 1, prefix: "+", suffix: "M", label: "clientes atendidos" },
+        {
+          value: getExperienceYears(),
+          decimals: 0,
+          prefix: "+",
+          suffix: "",
+          label: "Años de experiencia",
+        },
+        { value: 500, decimals: 0, prefix: "+", suffix: "", label: "Clientes atendidos en la Región" },
       ],
     },
     clients: {
